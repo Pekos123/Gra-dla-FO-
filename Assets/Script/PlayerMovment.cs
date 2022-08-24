@@ -8,12 +8,14 @@ public class PlayerMovment : MonoBehaviour
 {
     // no to ten towrze objekt contorller ktory bedzie moim character kontorler
     public CharacterController controller;
-    [SerializeField]
-    private Rigidbody rb;
+
+    public CapsuleCollider colider;
+
+    public Rigidbody rb;
     // ten vector bedzie odpowiedzialny za ruch ( min. za skok i spadanie cnie)
     private Vector3 playerVelocity;
     // bool który sprawdza czy postać jest na ziemi
-    private bool groundedPlayer;
+    public bool groundedPlayer;
     public Transform groundCheck;
     public LayerMask gorundMask;
     public float groundDistance = 0.4f;
@@ -27,6 +29,8 @@ public class PlayerMovment : MonoBehaviour
 
 
     Dash dash;
+
+    TubeWalking tubeWalking;
 
 
     bool CanJump()
@@ -53,12 +57,8 @@ public class PlayerMovment : MonoBehaviour
 
         //porusza się po ziemi
 
-        
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !groundedPlayer)
-        {
-            StartCoroutine(dash.DashCorutine());
-        }
-        else
+       
+        if(!dash.isPlayerDashing)
         {
             controller.Move(move * Time.deltaTime * speed);
         }
@@ -84,9 +84,11 @@ public class PlayerMovment : MonoBehaviour
     void Start()
     {
         dash = transform.GetComponent<Dash>();
+        tubeWalking = transform.GetComponent<TubeWalking>();
     }
     void Update()
     {
-        Movment();
+        if(!tubeWalking.IsOnTube)
+            Movment();
     }
 }

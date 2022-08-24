@@ -5,8 +5,11 @@ using UnityEngine;
 public class Dash : MonoBehaviour
 {
     public bool isPlayerDashing = false;
-    float dashTime = 2;
-    float dashSpeed = 10f;
+    float dashTime = 0.5f;
+    float dashSpeed = 30f;
+
+    public int MaxDash = 1;
+    int DashCount = 0;
 
     PlayerMovment player;
 
@@ -26,6 +29,23 @@ public class Dash : MonoBehaviour
             yield return null;
         }
         isPlayerDashing = false;
+    }
+    bool CanDash()
+    {
+        if (!player.groundedPlayer && DashCount < MaxDash)
+            return true;
+        return false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash())
+        {
+            StartCoroutine(DashCorutine());
+            DashCount += 1;
+        }
+        if (DashCount >= MaxDash && player.groundedPlayer)
+            DashCount = 0;
     }
 
 }

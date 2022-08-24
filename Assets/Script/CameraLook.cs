@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CameraLook : MonoBehaviour
 {
@@ -12,9 +12,10 @@ public class CameraLook : MonoBehaviour
     private Transform Player;
 
     private float xRotation = 0f;
+
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     

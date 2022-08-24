@@ -355,6 +355,7 @@
 "Assets/Script/CameraLook.cs"
 "Assets/Script/Dash.cs"
 "Assets/Script/PlayerMovment.cs"
+"Assets/Script/TubeWalking.cs"
 -langversion:9.0
 
 /deterministic
