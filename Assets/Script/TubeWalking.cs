@@ -20,16 +20,17 @@ public class TubeWalking : MonoBehaviour
     public bool isOnEndOfTube = false;
 
 
+    // jezli wchodzi w objekt to nie wpinasz sie podrabinie
     private void OnTriggerEnter(Collider col)
     {
-        Debug.Log(col.tag);
 
         if (col.tag == "EndOfTube")
             isOnEndOfTube = true;
     }
+
+    // zeruje wartoœæ
     private void OnTriggerExit(Collider col)
     {
-        Debug.Log(col.tag);
 
         if (col.tag == "EndOfTube")
             isOnEndOfTube = false;
@@ -39,9 +40,13 @@ public class TubeWalking : MonoBehaviour
     {
         player = GetComponent<PlayerMovment>();
         text = TextCanvas.transform.GetComponent<Text>();
+
+        // ustawia text "click [e] to use" na niewidzialnyu
+
         TextCanvas.SetActive(false);
     }
 
+    //wspina sie
     IEnumerator climb()
     {
         player.rb.isKinematic = true;
@@ -54,12 +59,12 @@ public class TubeWalking : MonoBehaviour
 
                     case "w":
                         if(!isOnEndOfTube)
-                            Debug.Log("w");
+                            //wspina sie do gory
                             player.transform.position += Vector3.up / player.speed;
                         break;
                     case "s":
                         if(!player.groundedPlayer)
-                            Debug.Log("s");
+                            //wpsina sie w dó³
                             player.transform.position += Vector3.down / player.speed;
                         break;
                 }
@@ -74,22 +79,29 @@ public class TubeWalking : MonoBehaviour
     {
         
         RaycastHit hit;
+        // bierze sirodek ekaranu 
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+
         if (Physics.Raycast(ray, out hit))
         {
             Transform objectHit = hit.transform;
+            // sprawdza czy obkiet na który nakieruje jest obiekem o tagu #tube i znajduje siê w zasiengu
             if (objectHit.tag == "tube" && hit.distance <= distance)
             {
+                // robie napis
                 text.text = "Click [e] to use";
                 TextCanvas.SetActive(true);
+                // wylaczam celownik 
                 CrossHair.SetActive(false);
                 if(Input.GetKeyDown(KeyCode.E))
                 {
+                    // wspina sie 
                     StartCoroutine(climb());
                 }
             }
             else
             {
+                // wylacza napis i wcaza celownik
                 TextCanvas.SetActive(false);
                 CrossHair.SetActive(true);
             }

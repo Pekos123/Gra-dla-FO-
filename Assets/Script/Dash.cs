@@ -30,6 +30,8 @@ public class Dash : MonoBehaviour
         }
         isPlayerDashing = false;
     }
+
+    //funkcja ktora sprawdza czy moze dashowac
     bool CanDash()
     {
         if (!player.groundedPlayer && DashCount < MaxDash)
@@ -44,7 +46,8 @@ public class Dash : MonoBehaviour
             StartCoroutine(DashCorutine());
             DashCount += 1;
         }
-        if (DashCount >= MaxDash && player.groundedPlayer)
+        // jezli jest na podlodze i to mu sie zeruja
+        if (player.groundedPlayer)
             DashCount = 0;
     }
 

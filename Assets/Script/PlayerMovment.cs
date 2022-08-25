@@ -33,6 +33,8 @@ public class PlayerMovment : MonoBehaviour
     TubeWalking tubeWalking;
 
 
+
+    // speawdza czy moze skakac
     bool CanJump()
     {
         if(jump < MaxDoubleJump && !dash.isPlayerDashing)
@@ -58,6 +60,7 @@ public class PlayerMovment : MonoBehaviour
         //porusza się po ziemi
 
        
+        // porusza sie kiedy nie dashuje
         if(!dash.isPlayerDashing)
         {
             controller.Move(move * Time.deltaTime * speed);
@@ -69,7 +72,8 @@ public class PlayerMovment : MonoBehaviour
             jump += 1;
         }
 
-        if (jump >= MaxDoubleJump && groundedPlayer)
+        // ejzli ejst na ziemi to mu sie jumy resetuja
+        if (groundedPlayer)
             jump = 0;
 
         
@@ -88,6 +92,7 @@ public class PlayerMovment : MonoBehaviour
     }
     void Update()
     {
+        // rusza sie wtedy kied sie nie wspina
         if(!tubeWalking.IsOnTube)
             Movment();
     }
